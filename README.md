@@ -30,7 +30,7 @@ c = (b - 3) / (a + 1.5).relu() + 5
 d = a - (b - 7.1).abs() + c ** 2
 d.backward()
 
-# a.grad contains value of the ∂a/∂d (the same holds analogically for the b.grad, c.grad and d.grad). 
+# a.grad contains value of the ∂a/∂d (analogically, the same holds for the b, c and d). 
 print(a.grad, b.grad, c.grad, d.grad)
 ```
 
@@ -51,11 +51,11 @@ Whole autograd logic is implemented in one module [core.py](./minigrad/core.py)
 
 At its core is `Value` class which wraps int/float. It provides support for various functions like addition, division or tanh.
 
-Each `Value` is treated as a constant, so for every function's output, a new `Value` object is created. To allow dynamic tracking of 
-the computational graph, its `grad_fn` field is populated by a reference to the derivative of the 
-function and to the reference of its inputs (this is wrapped under one class `GradFunction`). 
+To allow for dynamic tracking of the computational graph, a new `Value` object is created for every function's output, with
+its `grad_fn` field populated by a reference to the derivative of the function and to its inputs (this is wrapped under
+one class `GradFunction`).
 
-All of this allows for a simple implementation of the backpropagation, which can be triggered by the `backward` method.
+All of this is used for a simple implementation of the backpropagation, which can be triggered by the `backward` method.
 
 ## Neural network training
 
