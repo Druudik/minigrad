@@ -80,14 +80,14 @@ class TestCore(unittest.TestCase):
                     t.retain_grad()
 
                 # Compare outputs and intermediate results.
-                self.almost_equal(output, torch_output)
-                self.all_close(intermediate, torch_intermediate)
+                self._almost_equal(output, torch_output)
+                self._all_close(intermediate, torch_intermediate)
 
                 # Compute and compare gradients.
                 torch_output.backward()
                 output.backward()
-                self.almost_equal(output, torch_output)
-                self.all_close(intermediate, torch_intermediate)
+                self._almost_equal(output, torch_output)
+                self._all_close(intermediate, torch_intermediate)
 
     # noinspection PyTypeChecker
     def test_reshape(self):
@@ -101,7 +101,7 @@ class TestCore(unittest.TestCase):
         out = transpose(matrix)
         np.testing.assert_array_equal(matrix.T, out)
 
-    def almost_equal(self, actual: Value, expected: torch.Tensor, decimal: int = 9):
+    def _almost_equal(self, actual: Value, expected: torch.Tensor, decimal: int = 9):
         """
         Checks the gradient and value equality.
         """
@@ -116,7 +116,7 @@ class TestCore(unittest.TestCase):
             decimal=decimal,
         )
 
-    def all_close(self, actual: List[Value], expected: List[torch.Tensor], atol: float = 1e-9):
+    def _all_close(self, actual: List[Value], expected: List[torch.Tensor], atol: float = 1e-9):
         """
         Checks the gradient and value equality for every pair.
         """
